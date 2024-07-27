@@ -11,4 +11,9 @@ export class DatabaseService<T> {
     const newData = new this.model(data)
     return newData.save();
   }
+
+  async findOneDocument(searchParam: any, value: string)  {
+    let query = {[searchParam]: value}
+    return await this.model.findOne(query).exec()
+  }
 }

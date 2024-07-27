@@ -7,6 +7,8 @@ import { AuthService } from './auth.service.js';
 // import { DatabaseService } from '../store/db.service.js';
 import { AuthControllers } from './auth.controllers.js';
 import { APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
+import { User, UserSchema } from '../user/schema.js';
 
 
 @Module({
@@ -21,6 +23,7 @@ import { APP_GUARD } from '@nestjs/core';
       },
       inject: [ConfigService],
     }),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema}])
   ],
   controllers: [AuthControllers],
   providers: [
