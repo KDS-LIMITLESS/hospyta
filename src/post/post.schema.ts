@@ -1,20 +1,21 @@
-import { Prop, raw,  SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document, HydratedDocument, Schema, ObjectId } from 'mongoose';
-import * as bcrypt from 'bcryptjs';
+import { Prop, raw,  SchemaFactory } from '@nestjs/mongoose'
+import mongoose, { Document, HydratedDocument, Schema, ObjectId } from 'mongoose'
+import * as bcrypt from 'bcryptjs'
 
 
 export class Post extends Document {
-  image: string;                
-  content: string;              
-  subject: string;              
-  category: 'Kidney' | 'Headache' | 'Stomach'; 
-  time: Date;                   
-  created_at: Date;
-  upvotes: number;             
-  downvotes: number;           
-  views: number;               
-  username: string;            
-  userId: Schema.Types.ObjectId;          
+  image: string               
+  content: string              
+  subject: string
+  category: 'Kidney' | 'Headache' | 'Stomach'
+  time: Date              
+  created_at: Date
+  upvotes: number            
+  downvotes: number
+  views: number             
+  username: string
+  userId: Schema.Types.ObjectId
+  replycount: number     
 }
 
 export type postDocument = HydratedDocument<Post>
@@ -74,6 +75,11 @@ export const PostSchema = new Schema<Post>({
     type: Number, 
     default: 0, 
   },
+
+  replycount: {
+    type: Number,
+    default: 0
+  }
 });
 
 // USE CLOUDINARY API'S INSTEAD 
@@ -89,7 +95,7 @@ PostSchema.pre<Post>('save', async function(next) {
     this.image = imageAvatars[randomIndex]
   }
 
-  next();
-});
+  next()
+})
 
 

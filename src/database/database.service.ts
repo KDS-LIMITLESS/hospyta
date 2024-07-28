@@ -98,17 +98,20 @@ export class DatabaseService<T> {
 
   async upvotePost(id: string): Promise<any> {
     try {
-      return this.model.findByIdAndUpdate(id, { $inc: { upvotes: 1 } }, { new: true }).exec();
+      let query = await this.model.findByIdAndUpdate(id, { $inc: { upvotes: 1 } }, { new: true }).exec();
+      if (query === null) throw new BadRequestException({message: ResponseMessages.ResourceNotFound})
+      return query
     }
     catch(err: any) {
       throw new BadRequestException({message: err.message})
     }
-
   }
 
   async downvotePost(id: string): Promise<any> {
     try {
-      return this.model.findByIdAndUpdate(id, { $inc: { downvotes: 1 } }, { new: true }).exec();
+      let query = await this.model.findByIdAndUpdate(id, { $inc: { downvotes: 1 } }, { new: true }).exec();
+      if (query === null) throw new BadRequestException({message: ResponseMessages.ResourceNotFound})
+      return query
     }
     catch(err: any) {
       throw new BadRequestException({message: err.message})

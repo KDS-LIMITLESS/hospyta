@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Put, Query, Req, Res } from "@nestjs/common"
 import { PostService } from "./post.services"
-import { CreatePostDto, PostIdDto, UpdatePostDto } from "./post.dto"
+import { CategoryDto, CreatePostDto, PostIdDto, UpdatePostDto } from "./post.dto"
 import { SkipAuth } from "../auth/jwt.strategy"
 
 @Controller('api.hospyta/v1/posts')
@@ -32,6 +32,12 @@ export class PostController {
   @Get('sort-upvotes')
   async sortPostsByUpvotes(@Res() res): Promise<any> {
     return res.status(HttpStatus.OK).json(await this.postService.sortPostsByUpvotes())
+  }
+
+  @SkipAuth()
+  @Get('category')
+  async sortPostByCategory(@Res() res, @Query() query:CategoryDto): Promise<any> {
+    return res.status(HttpStatus.OK).json(await this.postService.getPostsByCategory(query.category))
   }
 
   @Patch('upvote')

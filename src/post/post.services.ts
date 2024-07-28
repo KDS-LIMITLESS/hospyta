@@ -89,16 +89,25 @@ export class PostService {
   }
 
   async upvotePost(id: string): Promise<Post> {
+    await this.postModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true }).exec()
     return await this.dbService.upvotePost(id)
   }
 
   async downvotePost(id: string): Promise<Post> {
+    await this.postModel.findByIdAndUpdate(id, { $inc: { views: 1 } }, { new: true }).exec()
     return await this.dbService.downvotePost(id)
   }
 
   async sortPostsByUpvotes(): Promise<Post[]> {
-    return this.postModel.find().sort({ upvotes: -1 })
+    return this.postModel.find()
+    .sort({ upvotes: -1 })
     .select('-__v -time')
+    .exec();
+  }
+
+  async getPostsByCategory(category: string): Promise<Post[]> {
+    return this.postModel.find({ category })
+    .sort({ upvotes: -1 })
     .exec();
   }
 }

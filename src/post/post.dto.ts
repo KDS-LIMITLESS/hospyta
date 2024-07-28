@@ -1,5 +1,5 @@
 import { PickType } from "@nestjs/mapped-types";
-import { IsNotEmpty, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsNotEmpty, IsEnum, IsOptional, IsString, IsMongoId } from "class-validator";
 
 enum PostCategories {
   KIDNEY = 'Kidney',
@@ -41,6 +41,9 @@ export class UpdatePostDto {
 }
 
 export class PostIdDto {
+  @IsMongoId()
   @IsNotEmpty()
   postId
 }
+
+export class CategoryDto extends PickType(CreatePostDto, ['category'] as const) {}

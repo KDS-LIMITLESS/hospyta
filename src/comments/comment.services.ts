@@ -7,6 +7,7 @@ import { DatabaseService } from '../database/database.service'
 import { Post } from '../post/post.schema'
 import { ObjectId } from 'mongodb'
 import ResponseMessages from '../utils/response-messages'
+import { Console } from 'console'
 
 @Injectable()
 export class CommentService {
@@ -19,8 +20,10 @@ export class CommentService {
 
   async addComment(userId: string, postId: any, createCommentDto: CreateCommentDto): Promise<Object> {
     try {
-      const find_post = await this.postModel.find({ postId })
-      if (!find_post) {
+      const find_post = await this.postModel.find({ _id: postId })
+      // CHECK IF POST EXISTS
+      console.log(find_post)
+      if (find_post.length === 0) {
         throw new NotFoundException({message: ResponseMessages.ResourceNotFound})
       }
       const newComment = await this.dbService.create(
@@ -29,6 +32,8 @@ export class CommentService {
           postId: new ObjectId(postId), 
           ...createCommentDto
         })
+        // UPDATE POST REPLY COUNT
+      await this.postModel.findByIdAndUpdate(postId, { $inc: { replycount: 1 } }).exec()
       return newComment.save()
       }
     catch(err: any) {
