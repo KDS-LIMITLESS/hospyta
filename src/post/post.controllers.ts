@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Patch, Post, Put, Query, Req, Res } from "@nestjs/common"
 import { PostService } from "./post.services"
 import { CreatePostDto, UpdatePostDto } from "./post.dto"
+import { SkipAuth } from "../auth/jwt.strategy"
 
 @Controller('api.hospyta/v1/posts')
 export class PostController {
