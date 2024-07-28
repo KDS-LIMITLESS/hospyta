@@ -13,6 +13,12 @@ export class Comment extends Document {
   @Prop({ required: true })
   comment: string;
 
+  @Prop({ default: 0 })
+  upvotes: number;
+
+  @Prop({ default: 0 })
+  downvotes: number;
+
   
 }
 

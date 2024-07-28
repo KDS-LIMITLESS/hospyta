@@ -6,7 +6,7 @@ import { CreateCommentDto } from './comment.Dto'
 import { DatabaseService } from '../database/database.service'
 import { Post } from '../post/post.schema'
 import { ObjectId } from 'mongodb'
-import ResponseMessages from 'src/utils/response-messages'
+import ResponseMessages from '../utils/response-messages'
 
 @Injectable()
 export class CommentService {
@@ -17,7 +17,7 @@ export class CommentService {
     @InjectModel(Post.name) private postModel: Model<Post>,
   ) { this.dbService = new DatabaseService<Comment>(this.commentModel) }
 
-  async addComment(userId: string, postId: string, createCommentDto: CreateCommentDto): Promise<Comment> {
+  async addComment(userId: string, postId: any, createCommentDto: CreateCommentDto): Promise<Object> {
     try {
       const find_post = await this.postModel.find({ postId })
       if (!find_post) {
@@ -37,17 +37,26 @@ export class CommentService {
     
   }
 
+  // GET COMMENT ON A POST IN ASCENDING OTHER (lATEST ONES FIRST)
   async getCommentsByPost(postId: string): Promise<Comment[]> {
     try {
       return await this.commentModel.find({ postId })
       .populate('userId', 'username user_image')
       .select('-_id -__v -postId -updatedAt')
+      .sort({ createdAt: 1 })
       .exec()
     }
     catch(err: any) {
       throw new BadRequestException({message: err.message})
     }
-    
+  }
+
+  async upvoteComment(id: string): Promise<Comment> {
+    return await this.dbService.upvotePost(id)
+  }
+
+  async downvoteComment(id: string): Promise<Comment> {
+    return await this.dbService.downvotePost(id)
   }
 }
 

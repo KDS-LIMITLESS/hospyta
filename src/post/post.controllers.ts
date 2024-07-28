@@ -29,12 +29,6 @@ export class PostController {
   }
 
   @SkipAuth()
-  @Get('sort-time')
-  async sortPostsByTime(@Res() res): Promise<any> {
-    return res.status(HttpStatus.OK).json(await this.postService.sortPostByTime())
-  }
-
-  @SkipAuth()
   @Get('sort-upvotes')
   async sortPostsByUpvotes(@Res() res): Promise<any> {
     return res.status(HttpStatus.OK).json(await this.postService.sortPostsByUpvotes())

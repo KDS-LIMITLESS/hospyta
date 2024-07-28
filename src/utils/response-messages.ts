@@ -7,7 +7,8 @@ enum ResponseMessages {
 
     ResourceNotFound = 'The resource you are looking for does not exist in the database',
     Request_Forbidden = "You are not allowed to make changes to this resource",
-    UserAlreadyExists = "User Already Exist"
+    UserAlreadyExists = "User Already Exist",
+    ServerError = "Database Error" 
 
 }
 

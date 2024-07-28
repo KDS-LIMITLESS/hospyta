@@ -72,12 +72,15 @@ export class PostService {
     
   }
 
+  // GET POSTS IN ASCENDINT OTHER 
+  // THIS ENDPOINT IS NOT ATHENTICATED ANYONE CAN VIEW THIS ENDPOINT WITHOUT REGISTERING ON THE APPLICATION
   async getPosts(): Promise<any> {
     try {
       // include the post authors image and username in the post document
       return this.postModel.find()
       .populate('userId', 'user_image username' )
       .select('-__v -time')
+      .sort({ createdAt: 1 })
       .exec()
     }
     catch(err: any) {
@@ -86,28 +89,11 @@ export class PostService {
   }
 
   async upvotePost(id: string): Promise<Post> {
-    try {
-      return this.postModel.findByIdAndUpdate(id, { $inc: { upvotes: 1 } }, { new: true }).exec();
-    }
-    catch(err: any) {
-      throw new BadRequestException({message: err.message})
-    }
-
+    return await this.dbService.upvotePost(id)
   }
 
   async downvotePost(id: string): Promise<Post> {
-    try {
-      return this.postModel.findByIdAndUpdate(id, { $inc: { downvotes: 1 } }, { new: true }).exec();
-    }
-    catch(err: any) {
-      throw new BadRequestException({message: err.message})
-    }
-  }
-
-  async sortPostByTime(): Promise<Post[]> {
-    return this.postModel.find().sort({ createdAt: -1 })
-    .select('-__v -time')
-    .exec();
+    return await this.dbService.downvotePost(id)
   }
 
   async sortPostsByUpvotes(): Promise<Post[]> {
