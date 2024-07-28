@@ -22,7 +22,8 @@ export class PostService {
   async createPost(post: CreatePostDto, userId: string): Promise<Post> {
     try {
       let new_post = await this.dbService.create({userId: new ObjectId(userId), ...post})
-      return new_post
+      let  {__v, time, ...post_details} = new_post._doc
+      return post_details
     }
     catch(err: any) {
       throw new BadRequestException({message: err.message})
@@ -73,9 +74,10 @@ export class PostService {
 
   async getPosts(): Promise<any> {
     try {
+      // include the post authors image and username in the post document
       return this.postModel.find()
-      .populate('userId', 'username user_image' )
-      .select('-__v')
+      .populate('userId', 'user_image username' )
+      .select('-__v -time')
       .exec()
     }
     catch(err: any) {

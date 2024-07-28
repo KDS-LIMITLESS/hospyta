@@ -13,7 +13,7 @@ export class PostController {
   }
 
   @Delete('own/delete/') 
-  async deleteOwnPost(@Req() req, @Query('id') postId: string, @Res() res) {
+  async deleteOwnPost(@Req() req, @Query('postId') postId: string, @Res() res) {
     return res.status(HttpStatus.OK).json(await this.postService.deleteUserPost(req.user.userId, postId))
   }
 

@@ -76,6 +76,7 @@ export const PostSchema = new Schema<Post>({
   },
 });
 
+// USE CLOUDINARY API'S INSTEAD 
 const imageAvatars = [
   'https://images.pexels.com/photos/1237119/pexels-photo-1237119.jpeg?auto=compress&cs=tinysrgb&h=350',
   'https://images.pexels.com/photos/256541/pexels-photo-256541.jpeg?auto=compress&cs=tinysrgb&h=350',

@@ -40,7 +40,8 @@ export class CommentService {
   async getCommentsByPost(postId: string): Promise<Comment[]> {
     try {
       return await this.commentModel.find({ postId })
-      .populate('userId', 'username')
+      .populate('userId', 'username user_image')
+      .select('-_id -__v -postId -updatedAt')
       .exec()
     }
     catch(err: any) {
