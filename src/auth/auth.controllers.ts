@@ -5,7 +5,7 @@ import { LocalAuthGuard } from "./local.strategy.js";
 import { SkipAuth } from "./jwt.strategy.js";
 import { AuthDto } from "./authDto.js";
 
-@Controller('api.hospyta/v1')
+@Controller('api.hospyta/v1/auth')
 export class AuthControllers {
   constructor(private readonly authService: AuthService) {}
 

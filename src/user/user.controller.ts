@@ -1,5 +1,5 @@
 import { Body, Controller, HttpStatus, Post, Req, Res } from "@nestjs/common";
-import { UserService } from "./service";
+import { UserService } from "./user.service";
 import { SkipAuth } from "src/auth/jwt.strategy";
 import { createUserDto } from "./user.Dto";
 

@@ -4,7 +4,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import * as bcrypt from 'bcryptjs'
 import { Model } from "mongoose";
 import { DatabaseService } from "src/database/database.service";
-import { User } from "src/user/schema";
+import { User } from "src/user/user.schema";
 import { UserResponseDto } from "src/user/user.Dto";
 import ResponseMessages from "src/utils/response-messages";
 

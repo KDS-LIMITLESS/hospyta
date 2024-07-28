@@ -8,7 +8,7 @@ import { AuthService } from './auth.service.js';
 import { AuthControllers } from './auth.controllers.js';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
-import { User, UserSchema } from '../user/schema.js';
+import { User, UserSchema } from '../user/user.schema.js';
 
 
 @Module({
