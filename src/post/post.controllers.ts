@@ -21,6 +21,7 @@ export class PostController {
     return res.status(HttpStatus.OK).json(await this.postService.editUserPost(req.user.userId, query.postId, updatePostDto))
   }
   
+  @SkipAuth()
   @Get('get')
   async getPosts(@Res() res): Promise<any> {
     return res.status(HttpStatus.OK).json(await this.postService.getPosts())
