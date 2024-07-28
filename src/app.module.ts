@@ -11,7 +11,7 @@ import { CommentModule } from './comments/comment.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(process.env.MONGO_DB, {
+    MongooseModule.forRoot(process.env.MONGODB, {
       dbName: "hospyta",
       onConnectionCreate: function(connection) {
         console.log(">>>>>> Connected to Database")

@@ -17,7 +17,7 @@ import { User, UserSchema } from '../user/user.schema.js';
       imports: [ConfigModule],
       global: true,
       useFactory: async function(configService: ConfigService) {
-        return {  secret: configService.get('JWT_SECRET_KEY'),
+        return {  secret: configService.get('JWTSECRETKEY'),
           signOptions: { expiresIn: '1d' }
         }
       },
