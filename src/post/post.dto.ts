@@ -1,3 +1,4 @@
+import { PickType } from "@nestjs/mapped-types";
 import { IsNotEmpty, IsEnum, IsOptional, IsString } from "class-validator";
 
 enum PostCategories {
@@ -37,5 +38,9 @@ export class UpdatePostDto {
   @IsOptional()
   @IsEnum(PostCategories)
   category?: String
+}
 
+export class PostIdDto {
+  @IsNotEmpty()
+  postId
 }

@@ -3,7 +3,7 @@ import { InjectModel, Schema } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { User } from "../user/user.schema";
 import { Post } from "./post.schema";
-import { CreatePostDto, UpdatePostDto } from "./post.dto";
+import { CreatePostDto, PostIdDto, UpdatePostDto } from "./post.dto";
 import { DatabaseService } from "src/database/database.service";
 import { ObjectId } from "mongodb";
 import ResponseMessages from "../utils/response-messages";
@@ -30,7 +30,7 @@ export class PostService {
     }
   }
 
-  async deleteUserPost(userId: string, postId: string) {
+  async deleteUserPost(userId: string, postId: any) {
     try {
       let find_post = await this.dbService.findDocumentById(postId) 
     
@@ -102,5 +102,17 @@ export class PostService {
     catch(err: any) {
       throw new BadRequestException({message: err.message})
     }
+  }
+
+  async sortPostByTime(): Promise<Post[]> {
+    return this.postModel.find().sort({ createdAt: -1 })
+    .select('-__v -time')
+    .exec();
+  }
+
+  async sortPostsByUpvotes(): Promise<Post[]> {
+    return this.postModel.find().sort({ upvotes: -1 })
+    .select('-__v -time')
+    .exec();
   }
 }
